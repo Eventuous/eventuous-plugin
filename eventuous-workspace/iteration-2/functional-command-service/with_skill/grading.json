@@ -1,0 +1,61 @@
+{
+  "eval_id": 1,
+  "run_type": "with_skill",
+  "expectations": [
+    {
+      "text": "uses-functional-service",
+      "passed": true,
+      "evidence": "public class BookingService : CommandService<BookingState> — extends the functional CommandService<TState> (no aggregate type parameter)"
+    },
+    {
+      "text": "uses-fluent-builder",
+      "passed": true,
+      "evidence": "On<BookRoom>().InState(ExpectedState.New).GetStream(...).Act(...) and On<CancelBooking>().InState(ExpectedState.Existing).GetStream(...).Act(...)"
+    },
+    {
+      "text": "act-returns-events",
+      "passed": true,
+      "evidence": "Act(cmd => [ new V1.RoomBooked(...) ]) returns a collection literal; Act((state, _, cmd) => { ... return [new V1.BookingCancelled(...)]; }) also returns events"
+    },
+    {
+      "text": "state-inherits-state-t",
+      "passed": true,
+      "evidence": "public record BookingState : State<BookingState> { ... }"
+    },
+    {
+      "text": "handles-both-commands",
+      "passed": true,
+      "evidence": "On<BookRoom>() handles BookRoom command; On<CancelBooking>() handles CancelBooking command"
+    },
+    {
+      "text": "no-register-known-event-types",
+      "passed": true,
+      "evidence": "No call to TypeMap.RegisterKnownEventTypes() anywhere. The response explicitly states: 'The source generator automatically registers them in TypeMap — no manual registration needed.'"
+    },
+    {
+      "text": "no-default-serializer-setup",
+      "passed": true,
+      "evidence": "No call to DefaultEventSerializer.SetDefaultSerializer() anywhere in the response"
+    },
+    {
+      "text": "uses-kurrentdb-client",
+      "passed": true,
+      "evidence": "builder.Services.AddKurrentDBClient(builder.Configuration[\"KurrentDB:ConnectionString\"]!)"
+    },
+    {
+      "text": "uses-kurrentdb-scheme",
+      "passed": true,
+      "evidence": "appsettings.json uses \"kurrentdb://localhost:2113?tls=false\""
+    },
+    {
+      "text": "no-esdb-event-store",
+      "passed": true,
+      "evidence": "No reference to EsdbEventStore anywhere; uses KurrentDBEventStore throughout"
+    },
+    {
+      "text": "no-aggregate-store",
+      "passed": true,
+      "evidence": "No call to AddAggregateStore anywhere in the response"
+    }
+  ]
+}

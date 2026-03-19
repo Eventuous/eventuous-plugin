@@ -1,0 +1,61 @@
+{
+  "eval_id": 2,
+  "run_type": "with_skill",
+  "expectations": [
+    {
+      "text": "registers-type-map",
+      "passed": false,
+      "evidence": "No manual TypeMap calls are made. The response explicitly states '[EventType] attributes are source-generated' and shows a comment 'No manual TypeMap calls needed'. This is correct behavior but fails the original assertion that expected TypeMap registration."
+    },
+    {
+      "text": "registers-event-store",
+      "passed": true,
+      "evidence": "builder.Services.AddEventStore<KurrentDBEventStore>() is present"
+    },
+    {
+      "text": "registers-subscription",
+      "passed": true,
+      "evidence": "builder.Services.AddSubscription<AllStreamSubscription, AllStreamSubscriptionOptions>(...) and AddSubscription<AllPersistentSubscription, AllPersistentSubscriptionOptions>(...) are both present"
+    },
+    {
+      "text": "registers-event-handler",
+      "passed": true,
+      "evidence": ".AddEventHandler<BookingEventHandler>() is called in both subscription registrations"
+    },
+    {
+      "text": "uses-aspnet-builder",
+      "passed": true,
+      "evidence": "var builder = WebApplication.CreateBuilder(args) and var app = builder.Build() are used; app.MapControllers(), app.MapEventuousSpyglass() are present"
+    },
+    {
+      "text": "no-register-known-event-types",
+      "passed": false,
+      "evidence": "The Key Points section shows a code comment block: '// NOT needed — handled automatically\\nTypeMap.RegisterKnownEventTypes();\\nDefaultEventSerializer.SetDefaultSerializer(...)' — these strings appear literally in the response as examples of what NOT to do. While the intent is instructional, the string 'TypeMap.RegisterKnownEventTypes()' does appear in the document."
+    },
+    {
+      "text": "no-default-serializer-setup",
+      "passed": false,
+      "evidence": "The Key Points section shows 'DefaultEventSerializer.SetDefaultSerializer(...)' as an example of what NOT to do. The string appears in the document even though it is presented as a negative example."
+    },
+    {
+      "text": "uses-kurrentdb-client",
+      "passed": true,
+      "evidence": "builder.Services.AddKurrentDBClient(builder.Configuration[\"EventStore:ConnectionString\"]!) is present"
+    },
+    {
+      "text": "uses-kurrentdb-scheme",
+      "passed": false,
+      "evidence": "appsettings.json uses 'esdb://localhost:2113?tls=false' and the TLS example also uses 'esdb://admin:changeit@my-kurrentdb-host:2113'. The Key Points section explicitly states 'Eventuous KurrentDB uses the esdb:// scheme (not kurrentdb://)' — incorrect guidance."
+    },
+    {
+      "text": "no-esdb-event-store",
+      "passed": true,
+      "evidence": "No reference to EsdbEventStore anywhere; uses KurrentDBEventStore"
+    },
+    {
+      "text": "no-aggregate-store",
+      "passed": true,
+      "evidence": "No call to AddAggregateStore. The response mentions IAggregateStore is deprecated but does not use AddAggregateStore."
+    }
+  ]
+}
