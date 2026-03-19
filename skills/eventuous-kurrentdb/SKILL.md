@@ -28,13 +28,13 @@ using Eventuous.KurrentDB.Producers;      // KurrentDBProducer, KurrentDBProduce
 Register the KurrentDB gRPC client using `AddKurrentDBClient` (provided by the `KurrentDB.Client` package):
 
 ```csharp
-services.AddKurrentDBClient("kurrentdb://localhost:2113?tls=false");
+services.AddKurrentDBClient("esdb://localhost:2113?tls=false");
 ```
 
 Or from configuration:
 
 ```csharp
-services.AddKurrentDBClient(configuration["KurrentDB:ConnectionString"]!);
+services.AddKurrentDBClient(configuration["EventStore:ConnectionString"]!);
 ```
 
 This registers `KurrentDBClient` as a singleton in the DI container. All Eventuous KurrentDB types (`KurrentDBEventStore`, subscriptions, producer) resolve this client automatically.
@@ -44,7 +44,7 @@ This registers `KurrentDBClient` as a singleton in the DI container. All Eventuo
 Register `KurrentDBEventStore` as `IEventStore`, `IEventReader`, and `IEventWriter`:
 
 ```csharp
-services.AddKurrentDBClient("kurrentdb://localhost:2113?tls=false");
+services.AddKurrentDBClient("esdb://localhost:2113?tls=false");
 services.AddEventStore<KurrentDBEventStore>();
 ```
 
@@ -230,7 +230,7 @@ using Eventuous.Projections.MongoDB;
 public static class EventuousRegistrations {
     public static void AddEventuous(this IServiceCollection services, IConfiguration configuration) {
         // 1. KurrentDB client
-        services.AddKurrentDBClient(configuration["KurrentDB:ConnectionString"]!);
+        services.AddKurrentDBClient(configuration["EventStore:ConnectionString"]!);
 
         // 2. Event store (IEventStore, IEventReader, IEventWriter)
         services.AddEventStore<KurrentDBEventStore>();

@@ -228,7 +228,15 @@ if (result.Success) {
 
 Events decorated with `[EventType]` are automatically registered in `TypeMap` via source generation. No manual `TypeMap.RegisterKnownEventTypes()` call is needed — the source generator handles it at compile time.
 
-The default serializer uses `System.Text.Json` and is configured automatically. You do not need to call `DefaultEventSerializer.SetDefaultSerializer()` unless you need non-default JSON options.
+The default serializer uses `System.Text.Json`. For source-generated serialization (recommended for AOT), configure it explicitly:
+
+```csharp
+DefaultEventSerializer.SetDefaultSerializer(
+    new DefaultStaticEventSerializer(new SourceGenerationContext())
+);
+```
+
+If you don't need AOT or custom JSON options, the default serializer works without explicit configuration.
 
 ---
 
@@ -351,14 +359,14 @@ await producer.Produce(
 
 ## DI Registration Pattern
 
-Standard setup in `Program.cs` using KurrentDB as the default event store:
+Standard setup in `Program.cs` using KurrentDB as the default event store (matches the official Eventuous KurrentDB sample):
 
 ```csharp
 var builder = WebApplication.CreateBuilder(args);
 
 // 1. Register KurrentDB client (connection string from config)
 builder.Services.AddKurrentDBClient(
-    builder.Configuration["KurrentDB:ConnectionString"]!
+    builder.Configuration["EventStore:ConnectionString"]!
 );
 
 // 2. Register event store
@@ -387,17 +395,16 @@ Configuration in `appsettings.json`:
 
 ```json
 {
-  "KurrentDB": {
-    "ConnectionString": "kurrentdb://localhost:2113?tls=false"
+  "EventStore": {
+    "ConnectionString": "esdb://localhost:2113?tls=false"
   }
 }
 ```
 
 **Important:**
 - Event types are registered automatically via source generation (no manual `TypeMap` calls needed)
-- The default serializer is configured automatically (no `DefaultEventSerializer.SetDefaultSerializer()` needed)
 - `IAggregateStore` is deprecated — use `IEventReader`/`IEventWriter` extension methods instead
-- Use `AddKurrentDBClient` (not `AddEventStoreClient`) and the `kurrentdb://` connection scheme
+- Use `AddKurrentDBClient` (not `AddEventStoreClient`) — the connection string uses the `esdb://` scheme
 
 ---
 
