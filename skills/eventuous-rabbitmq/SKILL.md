@@ -1,6 +1,6 @@
 ---
 name: eventuous-rabbitmq
-description: "Use when configuring or implementing RabbitMQ integration with Eventuous. Covers RabbitMQ producer, subscriptions, exchange/queue configuration, and connection setup."
+description: "This skill should be used when configuring RabbitMQ integration with Eventuous. Covers RabbitMqProducer, RabbitMqSubscription, exchange and queue configuration, connection factory setup, and produce options. Common triggers: 'publish events to RabbitMQ', 'consume from RabbitMQ', 'RabbitMQ producer', 'RabbitMQ subscription', 'RabbitMQ exchange configuration'."
 ---
 # Eventuous RabbitMQ Integration
 

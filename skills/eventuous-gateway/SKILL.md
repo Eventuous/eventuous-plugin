@@ -1,6 +1,6 @@
 ---
 name: eventuous-gateway
-description: "Use when implementing cross-context event routing with Eventuous Gateway. Covers gateway configuration, subscription-to-producer bridging, and event transformations."
+description: "This skill should be used when implementing cross-context event routing with Eventuous Gateway. Covers AddGateway registration, RouteAndTransform delegates, IGatewayTransform, GatewayMessage, metadata propagation, and the awaitProduce option. Common triggers: 'route events between bounded contexts', 'forward events', 'event gateway', 'bridge subscription to producer', 'event shovel'."
 ---
 # Eventuous Gateway
 

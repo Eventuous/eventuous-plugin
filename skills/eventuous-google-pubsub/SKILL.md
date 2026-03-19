@@ -1,6 +1,6 @@
 ---
 name: eventuous-google-pubsub
-description: "Use when configuring or implementing Google Cloud Pub/Sub integration with Eventuous. Covers Pub/Sub producer and subscription configuration."
+description: "This skill should be used when configuring Google Cloud Pub/Sub integration with Eventuous. Covers GooglePubSubProducer for publishing to Pub/Sub topics, GooglePubSubSubscription for consuming messages, emulator configuration, message attributes, and ordering keys. Common triggers: 'publish to Pub/Sub', 'Google Pub/Sub subscription', 'Pub/Sub emulator', 'GooglePubSubProducer', 'Pub/Sub with Eventuous'."
 ---
 # Eventuous Google Pub/Sub Integration
 

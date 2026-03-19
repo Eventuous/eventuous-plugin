@@ -8,22 +8,6 @@ Eventuous is a production-grade Event Sourcing library for .NET that implements 
 
 **Target frameworks:** .NET 10/9/8. C# preview language features, nullable reference types, and implicit usings enabled.
 
-## Infrastructure-Specific Guides
-
-When working with specific infrastructure, also include the relevant skill file for full registration and configuration details:
-
-- `eventuous-kurrentdb.md` - KurrentDB (EventStoreDB) event store, subscriptions, producer
-- `eventuous-postgres.md` - PostgreSQL event store, subscriptions, projections
-- `eventuous-sqlserver.md` - SQL Server event store, subscriptions
-- `eventuous-mongodb.md` - MongoDB projections and checkpoint store
-- `eventuous-rabbitmq.md` - RabbitMQ producer and subscription
-- `eventuous-kafka.md` - Kafka producer and subscription
-- `eventuous-google-pubsub.md` - Google Pub/Sub producer and subscription
-- `eventuous-azure-servicebus.md` - Azure Service Bus producer and subscription
-- `eventuous-gateway.md` - Event gateway for cross-context routing
-
----
-
 ## Domain Model
 
 ### Identity
@@ -429,3 +413,19 @@ Spyglass diagnostic endpoint:
 ```csharp
 app.MapEventuousSpyglass();
 ```
+
+---
+
+## Infrastructure-Specific Guides
+
+When working with specific infrastructure, also include the relevant skill for full registration and configuration details:
+
+- `eventuous-kurrentdb` - KurrentDB (EventStoreDB) event store, subscriptions, producer
+- `eventuous-postgres` - PostgreSQL event store, subscriptions, projections
+- `eventuous-sqlserver` - SQL Server event store, subscriptions
+- `eventuous-mongodb` - MongoDB projections and checkpoint store
+- `eventuous-rabbitmq` - RabbitMQ producer and subscription
+- `eventuous-kafka` - Kafka producer and subscription
+- `eventuous-google-pubsub` - Google Pub/Sub producer and subscription
+- `eventuous-azure-servicebus` - Azure Service Bus producer and subscription
+- `eventuous-gateway` - Event gateway for cross-context routing

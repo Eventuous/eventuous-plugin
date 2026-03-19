@@ -1,6 +1,6 @@
 ---
 name: eventuous-azure-servicebus
-description: "Use when configuring or implementing Azure Service Bus integration with Eventuous. Covers Azure Service Bus producer and subscription configuration."
+description: "This skill should be used when configuring Azure Service Bus integration with Eventuous. Covers ServiceBusProducer, ServiceBusSubscription, queue and topic setup, session-based ordered processing, message attribute mapping, and DI registration. Common triggers: 'Azure Service Bus producer', 'Service Bus subscription', 'Service Bus sessions', 'ServiceBusProducer', 'Eventuous.Azure.ServiceBus'."
 ---
 # Eventuous Azure Service Bus Integration
 
