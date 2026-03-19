@@ -228,15 +228,7 @@ if (result.Success) {
 
 Events decorated with `[EventType]` are automatically registered in `TypeMap` via source generation. No manual `TypeMap.RegisterKnownEventTypes()` call is needed — the source generator handles it at compile time.
 
-The default serializer uses `System.Text.Json`. For source-generated serialization (recommended for AOT), configure it explicitly:
-
-```csharp
-DefaultEventSerializer.SetDefaultSerializer(
-    new DefaultStaticEventSerializer(new SourceGenerationContext())
-);
-```
-
-If you don't need AOT or custom JSON options, the default serializer works without explicit configuration.
+The default serializer uses `System.Text.Json` and works without explicit configuration.
 
 ---
 
@@ -366,7 +358,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // 1. Register KurrentDB client (connection string from config)
 builder.Services.AddKurrentDBClient(
-    builder.Configuration["EventStore:ConnectionString"]!
+    builder.Configuration["KurrentDB:ConnectionString"]!
 );
 
 // 2. Register event store
@@ -395,8 +387,8 @@ Configuration in `appsettings.json`:
 
 ```json
 {
-  "EventStore": {
-    "ConnectionString": "esdb://localhost:2113?tls=false"
+  "KurrentDB": {
+    "ConnectionString": "kurrentdb://localhost:2113?tls=false"
   }
 }
 ```
@@ -404,7 +396,7 @@ Configuration in `appsettings.json`:
 **Important:**
 - Event types are registered automatically via source generation (no manual `TypeMap` calls needed)
 - `IAggregateStore` is deprecated — use `IEventReader`/`IEventWriter` extension methods instead
-- Use `AddKurrentDBClient` (not `AddEventStoreClient`) — the connection string uses the `esdb://` scheme
+- Use `AddKurrentDBClient` (not `AddEventStoreClient`) with the `kurrentdb://` connection scheme
 
 ---
 
