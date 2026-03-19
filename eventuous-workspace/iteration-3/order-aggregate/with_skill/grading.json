@@ -1,0 +1,66 @@
+{
+  "eval_id": 0,
+  "run_type": "with_skill",
+  "expectations": [
+    {
+      "text": "uses-kurrentdb-client",
+      "passed": true,
+      "evidence": "builder.Services.AddKurrentDBClient(builder.Configuration[\"KurrentDB:ConnectionString\"]!)"
+    },
+    {
+      "text": "uses-kurrentdb-scheme",
+      "passed": true,
+      "evidence": "\"ConnectionString\": \"kurrentdb://localhost:2113?tls=false\""
+    },
+    {
+      "text": "uses-kurrentdb-config-key",
+      "passed": true,
+      "evidence": "builder.Configuration[\"KurrentDB:ConnectionString\"] and appsettings.json shows \"KurrentDB\": { \"ConnectionString\": ... }"
+    },
+    {
+      "text": "no-register-known-event-types",
+      "passed": true,
+      "evidence": "No call to TypeMap.RegisterKnownEventTypes() anywhere in the response. Key Points section explicitly states 'Event types are registered automatically via source generation — no manual TypeMap calls needed.'"
+    },
+    {
+      "text": "no-esdb-event-store",
+      "passed": true,
+      "evidence": "No reference to EsdbEventStore anywhere in the response"
+    },
+    {
+      "text": "no-aggregate-store",
+      "passed": true,
+      "evidence": "No call to AddAggregateStore. Key Points section states 'IAggregateStore is deprecated'"
+    },
+    {
+      "text": "uses-kurrentdb-event-store",
+      "passed": true,
+      "evidence": "builder.Services.AddEventStore<KurrentDBEventStore>();"
+    },
+    {
+      "text": "uses-map-discovered-commands",
+      "passed": true,
+      "evidence": "app.MapDiscoveredCommands<OrderState>(); and commands are annotated with [HttpCommand] attributes"
+    },
+    {
+      "text": "uses-state-record",
+      "passed": true,
+      "evidence": "public record OrderState : State<OrderState>"
+    },
+    {
+      "text": "uses-aggregate-generic",
+      "passed": true,
+      "evidence": "public class Order : Aggregate<OrderState>"
+    },
+    {
+      "text": "defines-three-events",
+      "passed": true,
+      "evidence": "Three events defined: OrderPlaced, OrderConfirmed, OrderCancelled"
+    },
+    {
+      "text": "has-business-guards",
+      "passed": true,
+      "evidence": "State-based guards present: 'if (State.Status != OrderStatus.Placed) throw new DomainException(...)' in Confirm(), and 'if (State.Status == OrderStatus.Cancelled)' / 'if (State.Status == OrderStatus.Confirmed)' in Cancel()"
+    }
+  ]
+}

@@ -1,0 +1,66 @@
+{
+  "eval_id": 1,
+  "run_type": "with_skill",
+  "expectations": [
+    {
+      "text": "uses-kurrentdb-client",
+      "passed": true,
+      "evidence": "builder.Services.AddKurrentDBClient(builder.Configuration[\"KurrentDB:ConnectionString\"]!)"
+    },
+    {
+      "text": "uses-kurrentdb-scheme",
+      "passed": true,
+      "evidence": "\"ConnectionString\": \"kurrentdb://localhost:2113?tls=false\""
+    },
+    {
+      "text": "uses-kurrentdb-config-key",
+      "passed": true,
+      "evidence": "builder.Configuration[\"KurrentDB:ConnectionString\"] and appsettings.json shows \"KurrentDB\": { \"ConnectionString\": ... }"
+    },
+    {
+      "text": "no-register-known-event-types",
+      "passed": true,
+      "evidence": "No call to TypeMap.RegisterKnownEventTypes() anywhere. Key Design Points states 'no TypeMap.RegisterKnownEventTypes() call is needed anywhere'"
+    },
+    {
+      "text": "no-esdb-event-store",
+      "passed": true,
+      "evidence": "No reference to EsdbEventStore anywhere in the response"
+    },
+    {
+      "text": "no-aggregate-store",
+      "passed": true,
+      "evidence": "No call to AddAggregateStore. Key Design Points states 'IAggregateStore is deprecated'"
+    },
+    {
+      "text": "uses-kurrentdb-event-store",
+      "passed": true,
+      "evidence": "builder.Services.AddEventStore<KurrentDBEventStore>();"
+    },
+    {
+      "text": "uses-map-discovered-commands",
+      "passed": true,
+      "evidence": "app.MapDiscoveredCommands<BookingState>(assemblies: typeof(BookingCommands).Assembly); and commands annotated with [HttpCommand] attributes"
+    },
+    {
+      "text": "uses-functional-service",
+      "passed": true,
+      "evidence": "public class BookingsCommandService : CommandService<BookingState> (single type parameter, not 3)"
+    },
+    {
+      "text": "uses-get-stream",
+      "passed": true,
+      "evidence": ".GetStream(cmd => GetStream(cmd.BookingId)) used for both BookRoom and CancelBooking handlers"
+    },
+    {
+      "text": "act-returns-events",
+      "passed": true,
+      "evidence": ".Act(cmd => [ new V1.RoomBooked(...) ]) and .Act((state, originalEvents, cmd) => { ... return [new V1.BookingCancelled(...)]; })"
+    },
+    {
+      "text": "handles-both-commands",
+      "passed": true,
+      "evidence": "On<BookRoom>() and On<CancelBooking>() both registered in BookingsCommandService constructor"
+    }
+  ]
+}

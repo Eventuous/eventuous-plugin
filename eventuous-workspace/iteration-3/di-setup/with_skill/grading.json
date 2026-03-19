@@ -1,0 +1,66 @@
+{
+  "eval_id": 2,
+  "run_type": "with_skill",
+  "expectations": [
+    {
+      "text": "uses-kurrentdb-client",
+      "passed": true,
+      "evidence": "builder.Services.AddKurrentDBClient(builder.Configuration[\"KurrentDB:ConnectionString\"]!)"
+    },
+    {
+      "text": "uses-kurrentdb-scheme",
+      "passed": true,
+      "evidence": "\"ConnectionString\": \"kurrentdb://localhost:2113?tls=false\" in appsettings.json"
+    },
+    {
+      "text": "uses-kurrentdb-config-key",
+      "passed": true,
+      "evidence": "builder.Configuration[\"KurrentDB:ConnectionString\"] and appsettings.json section \"KurrentDB\": { \"ConnectionString\": ... }"
+    },
+    {
+      "text": "no-register-known-event-types",
+      "passed": true,
+      "evidence": "No call to TypeMap.RegisterKnownEventTypes() anywhere. Response explicitly states 'No manual TypeMap.RegisterKnownEventTypes() call is needed'"
+    },
+    {
+      "text": "no-esdb-event-store",
+      "passed": true,
+      "evidence": "No reference to EsdbEventStore anywhere in the response"
+    },
+    {
+      "text": "no-aggregate-store",
+      "passed": true,
+      "evidence": "No call to AddAggregateStore. Comment states 'IAggregateStore is deprecated'"
+    },
+    {
+      "text": "uses-kurrentdb-event-store",
+      "passed": true,
+      "evidence": "builder.Services.AddEventStore<KurrentDBEventStore>();"
+    },
+    {
+      "text": "uses-map-discovered-commands",
+      "passed": true,
+      "evidence": "app.MapDiscoveredCommands<BookingState>(); and commands annotated with [HttpCommands<BookingState>] and [HttpCommand(Route = ...)]"
+    },
+    {
+      "text": "registers-subscription",
+      "passed": true,
+      "evidence": "builder.Services.AddSubscription<AllStreamSubscription, AllStreamSubscriptionOptions>(\"BookingsProjections\", ...) and builder.Services.AddSubscription<StreamPersistentSubscription, StreamPersistentSubscriptionOptions>(\"PaymentIntegration\", ...)"
+    },
+    {
+      "text": "registers-event-handler",
+      "passed": true,
+      "evidence": ".AddEventHandler<PaymentsIntegrationHandler>() in the StreamPersistentSubscription registration; PaymentsIntegrationHandler class extends EventHandler"
+    },
+    {
+      "text": "uses-aspnet-builder",
+      "passed": true,
+      "evidence": "var builder = WebApplication.CreateBuilder(args); used as the root of Program.cs"
+    },
+    {
+      "text": "shows-appsettings",
+      "passed": true,
+      "evidence": "Full appsettings.json example provided with KurrentDB ConnectionString, Mongo settings, Logging configuration"
+    }
+  ]
+}
