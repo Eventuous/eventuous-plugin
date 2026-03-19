@@ -1,0 +1,27 @@
+{
+  "name": "eventuous",
+  "version": "1.0.0",
+  "description": "Skills and agents for building event-sourced .NET applications with Eventuous",
+  "author": {
+    "name": "Eventuous",
+    "url": "https://eventuous.dev"
+  },
+  "homepage": "https://eventuous.dev",
+  "repository": "https://github.com/Eventuous/eventuous-plugin",
+  "license": "Apache-2.0",
+  "skills": [
+    "./skills/eventuous",
+    "./skills/eventuous-postgres",
+    "./skills/eventuous-kurrentdb",
+    "./skills/eventuous-mongodb",
+    "./skills/eventuous-rabbitmq",
+    "./skills/eventuous-kafka",
+    "./skills/eventuous-sqlserver",
+    "./skills/eventuous-google-pubsub",
+    "./skills/eventuous-azure-servicebus",
+    "./skills/eventuous-gateway"
+  ],
+  "agents": [
+    "./agents/eventuous-expert.md"
+  ]
+}

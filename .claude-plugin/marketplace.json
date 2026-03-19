@@ -1,0 +1,17 @@
+{
+  "name": "eventuous-plugin",
+  "description": "Claude Code marketplace for building event-sourced .NET applications with Eventuous",
+  "owner": {
+    "name": "Eventuous",
+    "url": "https://eventuous.dev"
+  },
+  "repository": "https://github.com/Eventuous/eventuous-plugin",
+  "plugins": [
+    {
+      "name": "eventuous",
+      "source": "./",
+      "version": "1.0.0",
+      "description": "Skills and agents for building event-sourced .NET applications with Eventuous — domain modeling, command services, event stores, subscriptions, producers, and infrastructure integrations"
+    }
+  ]
+}
