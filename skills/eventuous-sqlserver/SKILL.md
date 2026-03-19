@@ -1,6 +1,6 @@
 ---
 name: eventuous-sqlserver
-description: "Use when configuring or implementing SQL Server integration with Eventuous. Covers SQL Server event store, subscriptions, and checkpoint storage."
+description: "This skill should be used when configuring SQL Server (MSSQL) integration with Eventuous. Covers SqlServerStore event store, SqlServerAllStreamSubscription and SqlServerStreamSubscription, SqlServerCheckpointStore, and SqlServerProjector for read model projections. Common triggers: 'SQL Server event store', 'MSSQL with Eventuous', 'SqlServerStore', 'AddEventuousSqlServer', 'SQL Server projections'."
 ---
 # Eventuous SQL Server Integration
 
@@ -24,8 +24,19 @@ services.AddEventuousSqlServer(
     initializeDatabase: true      // creates schema on startup
 );
 
-// Option 2: From IConfiguration
+// Option 2: From IConfiguration (recommended)
 services.AddEventuousSqlServer(configuration.GetSection("SqlServer"));
+```
+
+The configuration section binds to `SqlServerStoreOptions`. Store the connection string in user secrets, environment variables, or a vault — not in `appsettings.json`:
+
+```json
+{
+  "SqlServer": {
+    "ConnectionString": "Server=localhost;Database=eventuous;User Id=sa;Password=...;TrustServerCertificate=true",
+    "Schema": "eventuous"
+  }
+}
 ```
 
 This registers:
@@ -107,6 +118,37 @@ SqlSubscriptionOptionsBase          (Schema, MaxPageSize, PollingInterval)
 
 Connection string and schema can come from either the subscription options or `SqlServerConnectionOptions` (registered by `AddEventuousSqlServer`).
 
+### Common Subscription Options (SqlSubscriptionOptionsBase)
+
+| Property | Type | Default | Description |
+|---|---|---|---|
+| `Schema` | string | `"eventuous"` | Database schema name |
+| `ConcurrencyLimit` | int | 1 | Number of concurrent message consumers |
+| `MaxPageSize` | int | 1024 | Messages fetched per poll |
+| `Polling` | PollingOptions | see below | Polling interval configuration |
+| `Retry` | RetryOptions | see below | Retry configuration |
+| `GapAgeThresholdMs` | int? | 3600000 (1h) | Gaps older than this are skipped |
+| `GapSkipTimeoutMs` | int? | 5000 | Max time a gap holds back the subscription |
+| `GapHandlingTimeoutMs` | int? | null | When set, creates tombstones for persistent gaps |
+
+**PollingOptions**: `MinIntervalMs` (5), `MaxIntervalMs` (1000), `GrowFactor` (1.5)
+**RetryOptions**: `InitialDelayMs` (50)
+
+Configure options inline:
+
+```csharp
+services.AddSubscription<SqlServerAllStreamSubscription, SqlServerAllStreamSubscriptionOptions>(
+    "FastSub",
+    builder => builder
+        .Configure(o => {
+            o.ConcurrencyLimit = 4;
+            o.MaxPageSize = 512;
+            o.Polling = new() { MinIntervalMs = 10, MaxIntervalMs = 500 };
+        })
+        .AddEventHandler<MyHandler>()
+);
+```
+
 ## Checkpoint Store
 
 `SqlServerCheckpointStore` implements `ICheckpointStore`. Stores checkpoints in `{schema}.Checkpoints` table.
@@ -164,3 +206,13 @@ services.AddSubscription<SqlServerAllStreamSubscription, SqlServerAllStreamSubsc
         .AddEventHandler<MyHandler>()
 );
 ```
+
+## Source Files
+
+Paths relative to the Eventuous repository root:
+
+- Store: `src/SqlServer/src/Eventuous.SqlServer/SqlServerStore.cs`
+- Registration: `src/SqlServer/src/Eventuous.SqlServer/Extensions/RegistrationExtensions.cs`
+- Subscriptions: `src/SqlServer/src/Eventuous.SqlServer/Subscriptions/`
+- Projections: `src/SqlServer/src/Eventuous.SqlServer/Projections/`
+- Checkpoint: `src/SqlServer/src/Eventuous.SqlServer/Subscriptions/SqlServerCheckpointStore.cs`
