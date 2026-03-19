@@ -1,6 +1,6 @@
 ---
 name: eventuous-kurrentdb
-description: "Use when configuring or implementing KurrentDB (EventStoreDB) integration with Eventuous. Covers KurrentDB event store, subscriptions (all-stream, per-stream, persistent), producer, and registration."
+description: "This skill should be used when configuring KurrentDB or EventStoreDB (ESDB) integration with Eventuous. Covers KurrentDBEventStore, AllStreamSubscription, StreamSubscription, StreamPersistentSubscription, AllPersistentSubscription, KurrentDBProducer, and checkpoint stores. Common triggers: 'set up EventStoreDB', 'KurrentDB subscription', 'persistent subscription', 'ESDB event store', 'EsdbEventStore migration'."
 ---
 # Eventuous KurrentDB (EventStoreDB) Integration
 

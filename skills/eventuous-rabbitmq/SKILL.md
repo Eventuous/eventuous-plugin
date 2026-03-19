@@ -161,51 +161,18 @@ services.AddSubscription<RabbitMqSubscription, RabbitMqSubscriptionOptions>(
 
 No checkpoint store is needed for RabbitMQ subscriptions since RabbitMQ manages delivery tracking through its own acknowledgment mechanism.
 
-## Gateway: Forwarding Events to RabbitMQ
+## Gateway Integration
 
-The gateway pattern connects an event store subscription to a RabbitMQ producer for cross-context integration. Requires the `Eventuous.Gateway` package.
+To forward events from an event store subscription to RabbitMQ, use the Eventuous Gateway. The stream name used in `Produce` becomes the RabbitMQ exchange name. See the `eventuous-gateway` skill for full gateway configuration details.
+
+Brief example:
 
 ```csharp
-using Eventuous.Gateway;
-using Eventuous.RabbitMq.Producers;
-using Eventuous.Postgresql.Subscriptions;
-
-// Register the producer
-services.AddProducer<RabbitMqProducer>();
-
-// Register the gateway (subscription + producer + transform)
-services.AddGateway<
-    PostgresAllStreamSubscription,
-    PostgresAllStreamSubscriptionOptions,
-    RabbitMqProducer,
-    RabbitMqProduceOptions>(
-    "IntegrationSubscription",
-    PaymentsGateway.Transform
+builder.Services.AddGateway<RabbitMqSubscription, RabbitMqProduceOptions>(
+    "payment-gateway",
+    GatewaySubscription<RabbitMqSubscription>.Create(...),
+    routeAndTransform
 );
-```
-
-The transform function maps consumed events to `GatewayMessage<RabbitMqProduceOptions>`:
-
-```csharp
-public static class PaymentsGateway {
-    static readonly StreamName             Stream         = new("PaymentsIntegration");
-    static readonly RabbitMqProduceOptions ProduceOptions = new();
-
-    public static ValueTask<GatewayMessage<RabbitMqProduceOptions>[]> Transform(
-        IMessageConsumeContext original
-    ) {
-        var result = original.Message is PaymentRecorded evt
-            ? new GatewayMessage<RabbitMqProduceOptions>(
-                Stream,
-                new BookingPaymentRecorded(evt.BookingId, evt.Amount),
-                new Metadata(),
-                ProduceOptions
-            )
-            : null;
-
-        return ValueTask.FromResult(result != null ? [result] : Array.Empty<GatewayMessage<RabbitMqProduceOptions>>());
-    }
-}
 ```
 
 ## Complete Example

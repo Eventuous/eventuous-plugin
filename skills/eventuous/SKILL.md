@@ -1,6 +1,6 @@
 ---
 name: eventuous
-description: "Use when building event-sourced .NET applications with Eventuous. Covers domain modeling (aggregates, state, events), command services (aggregate-based and functional), event stores, subscriptions, producers, type mapping, serialization, and diagnostics. Defaults to KurrentDB as the recommended event store unless the user specifies otherwise."
+description: "This skill should be used when building event-sourced .NET applications with Eventuous, or when asking about Eventuous aggregates, state, domain events, command services (aggregate-based or functional), event stores, subscriptions, producers, projections, type mapping, serialization, stream naming, or diagnostics. Common triggers: 'create an aggregate', 'define domain events', 'set up a command service', 'register event handlers', 'configure Eventuous', 'event sourcing with .NET'. Recommends KurrentDB as the default event store unless the user specifies otherwise."
 ---
 # Eventuous - Event Sourcing for .NET
 

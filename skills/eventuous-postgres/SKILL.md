@@ -1,6 +1,6 @@
 ---
 name: eventuous-postgres
-description: "Use when configuring or implementing PostgreSQL integration with Eventuous. Covers PostgreSQL event store, subscriptions (all-stream and per-stream), checkpoint storage, and projections."
+description: "This skill should be used when configuring PostgreSQL integration with Eventuous. Covers PostgresStore event store, PostgresAllStreamSubscription and PostgresStreamSubscription, PostgresCheckpointStore, and PostgresProjector for read model projections. Common triggers: 'set up Postgres with Eventuous', 'PostgreSQL event store', 'Postgres subscription', 'AddEventuousPostgres', 'Postgres projections'."
 ---
 # Eventuous PostgreSQL Integration
 
