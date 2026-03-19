@@ -1,0 +1,6 @@
+{
+  "eval_id": 1,
+  "eval_name": "functional-command-service",
+  "prompt": "How do I set up a functional command service in Eventuous? I have a Booking state and want to handle BookRoom and CancelBooking commands.",
+  "assertions": []
+}

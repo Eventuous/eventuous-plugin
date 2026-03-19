@@ -1,0 +1,31 @@
+{
+  "eval_id": 2,
+  "run_type": "with_skill",
+  "expectations": [
+    {
+      "text": "registers-type-map",
+      "passed": true,
+      "evidence": "`TypeMap.RegisterKnownEventTypes(typeof(BookingEvents).Assembly)` called at startup"
+    },
+    {
+      "text": "registers-event-store",
+      "passed": true,
+      "evidence": "`builder.Services.AddEventStore<KurrentDBEventStore>()` registers the event store"
+    },
+    {
+      "text": "registers-subscription",
+      "passed": true,
+      "evidence": "`builder.Services.AddSubscription<AllStreamSubscription, AllStreamSubscriptionOptions>(\"BookingsProjections\", ...)` registers a subscription"
+    },
+    {
+      "text": "registers-event-handler",
+      "passed": true,
+      "evidence": "`.AddEventHandler<BookingReadModelHandler>()` inside the subscription builder registers the event handler; `BookingReadModelHandler` class is also shown"
+    },
+    {
+      "text": "uses-aspnet-builder",
+      "passed": true,
+      "evidence": "Code is in `Program.cs` context using `var builder = WebApplication.CreateBuilder(args)` and `var app = builder.Build()`"
+    }
+  ]
+}

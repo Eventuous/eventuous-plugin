@@ -1,0 +1,31 @@
+{
+  "eval_id": 1,
+  "run_type": "without_skill",
+  "expectations": [
+    {
+      "text": "uses-functional-service",
+      "passed": true,
+      "evidence": "`public class BookingService : CommandService<BookingState>` — single type parameter, not the 3-param aggregate-based version"
+    },
+    {
+      "text": "uses-fluent-builder",
+      "passed": true,
+      "evidence": "Both handlers use `On<...>().InState(...).GetStream(...).Act(...)` fluent chain"
+    },
+    {
+      "text": "act-returns-events",
+      "passed": true,
+      "evidence": "BookRoom Act returns `[ new RoomBooked(...) ]` (array literal); CancelBooking Act returns `[new BookingCancelled(...)]`"
+    },
+    {
+      "text": "state-inherits-state-t",
+      "passed": true,
+      "evidence": "`public record BookingState : State<BookingState>` with `When(object @event)` override"
+    },
+    {
+      "text": "handles-both-commands",
+      "passed": true,
+      "evidence": "Both `On<BookRoom>()` and `On<CancelBooking>()` are registered in the constructor"
+    }
+  ]
+}

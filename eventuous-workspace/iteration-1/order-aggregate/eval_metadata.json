@@ -1,0 +1,6 @@
+{
+  "eval_id": 0,
+  "eval_name": "order-aggregate",
+  "prompt": "I'm starting a new .NET project and want to model an Order aggregate with Eventuous. The order should support placing, confirming, and cancelling. Show me the aggregate, state, and events.",
+  "assertions": []
+}

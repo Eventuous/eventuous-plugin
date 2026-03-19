@@ -1,0 +1,15 @@
+{
+  "reviews": [
+    {
+      "run_id": "order-aggregate-with_skill",
+      "feedback": "RegisterKnownEventTypes is not needed. Event types are now registered with source generation.\nbuilder.Services.AddEventStoreClient is not correct as Eventuous references KurrentDB client, so it should be AddKurrentDBClient\nconnection string scheme should be kurrentdb://\n\nThis is not needed as it's already done by default:\nDefaultEventSerializer.SetDefaultSerializer(\n    new DefaultEventSerializer(new JsonSerializerOptions(JsonSerializerDefaults.Web))\n);\n\nAddAggregateStore is deprecated\n\nEsdbEventStore doesn't exist\n\nIn an example it's better to use\n- A controller\n- Http command mapping\n",
+      "timestamp": "2026-03-19T21:52:19.474Z"
+    },
+    {
+      "run_id": "di-setup-with_skill",
+      "feedback": "app settings should be\n\n{\n  \"KurrentDB\": {\n    \"ConnectionString\": \"kurrentbb://localhost:2113?tls=false\"\n  }\n}\n\nThe setup should be updated accordingly",
+      "timestamp": "2026-03-19T21:52:19.474Z"
+    }
+  ],
+  "status": "in_progress"
+}

@@ -1,0 +1,41 @@
+{
+  "skill_name": "eventuous",
+  "evals": [
+    {
+      "id": 0,
+      "prompt": "I'm starting a new .NET project and want to model an Order aggregate with Eventuous. The order should support placing, confirming, and cancelling. Show me the aggregate, state, and events.",
+      "expected_output": "Complete Order aggregate with State<OrderState>, domain events (OrderPlaced, OrderConfirmed, OrderCancelled), and Aggregate<OrderState> with Apply methods and business logic guards.",
+      "assertions": [
+        {"name": "uses-state-record", "check": "Code defines OrderState inheriting from State<OrderState>"},
+        {"name": "uses-aggregate-generic", "check": "Code defines an aggregate class using Aggregate<OrderState>"},
+        {"name": "defines-three-events", "check": "At least 3 domain events defined (place, confirm, cancel)"},
+        {"name": "uses-when-fold", "check": "State uses the When() fold pattern to reconstruct from events"},
+        {"name": "has-business-guards", "check": "Aggregate methods include state-based guards preventing invalid transitions"}
+      ]
+    },
+    {
+      "id": 1,
+      "prompt": "How do I set up a functional command service in Eventuous? I have a Booking state and want to handle BookRoom and CancelBooking commands.",
+      "expected_output": "Functional CommandService<BookingState> with On<BookRoom>().InState(...).GetStream(...).Act(...) registration, showing pure functions that take state + command and return events.",
+      "assertions": [
+        {"name": "uses-functional-service", "check": "Uses CommandService<BookingState> (functional, not aggregate-based)"},
+        {"name": "uses-fluent-builder", "check": "Shows On<TCommand>().InState(...).GetStream(...).Act(...) fluent chain"},
+        {"name": "act-returns-events", "check": "The Act handler returns events (IEnumerable or array), not void"},
+        {"name": "state-inherits-state-t", "check": "BookingState inherits from State<BookingState>"},
+        {"name": "handles-both-commands", "check": "Both BookRoom and CancelBooking commands are registered"}
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "I'm using Eventuous and need to register my event types and set up DI for an ASP.NET Core app with an event store and subscriptions. What's the minimal setup?",
+      "expected_output": "TypeMap registration for events, AddEventStore, AddSubscription, and AddCheckpointStore DI calls in Program.cs, with event handler registration.",
+      "assertions": [
+        {"name": "registers-type-map", "check": "Shows TypeMap.RegisterKnownEventTypes() or individual TypeMap.AddType<> calls"},
+        {"name": "registers-event-store", "check": "Shows AddEventStore<> or equivalent store registration"},
+        {"name": "registers-subscription", "check": "Shows AddSubscription<> for at least one subscription type"},
+        {"name": "registers-event-handler", "check": "Shows event handler registration via AddEventHandler or inline"},
+        {"name": "uses-aspnet-builder", "check": "Code is in the context of WebApplicationBuilder / Program.cs"}
+      ]
+    }
+  ]
+}

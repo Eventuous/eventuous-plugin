@@ -1,0 +1,132 @@
+{
+  "metadata": {
+    "skill_name": "eventuous",
+    "skill_path": "/Users/alexey/dev/eventuous/eventuous-plugin/skills/eventuous",
+    "executor_model": "claude-sonnet-4-6",
+    "analyzer_model": "claude-opus-4-6",
+    "timestamp": "2026-03-19T21:43:57Z",
+    "evals_run": ["order-aggregate", "functional-command-service", "di-setup"],
+    "runs_per_configuration": 1
+  },
+  "runs": [
+    {
+      "eval_name": "order-aggregate",
+      "prompt": "Model an Order aggregate with Eventuous supporting placing, confirming, and cancelling.",
+      "with_skill": {
+        "pass_rate": 1.0,
+        "passed": 5,
+        "total": 5,
+        "time_seconds": 56.4,
+        "tokens": 18391,
+        "expectations": [
+          {"text": "uses-state-record", "passed": true, "evidence": "Defines OrderState : State<OrderState>"},
+          {"text": "uses-aggregate-generic", "passed": true, "evidence": "Defines Order : Aggregate<OrderState>"},
+          {"text": "defines-three-events", "passed": true, "evidence": "OrderPlaced, OrderConfirmed, OrderCancelled with [EventType]"},
+          {"text": "uses-when-fold", "passed": true, "evidence": "Uses On<TEvent>() handlers in constructor"},
+          {"text": "has-business-guards", "passed": true, "evidence": "Guards against confirming cancelled orders, empty items, etc."}
+        ]
+      },
+      "without_skill": {
+        "pass_rate": 1.0,
+        "passed": 5,
+        "total": 5,
+        "time_seconds": 49.9,
+        "tokens": 13261,
+        "expectations": [
+          {"text": "uses-state-record", "passed": true, "evidence": "Defines OrderState : State<OrderState>"},
+          {"text": "uses-aggregate-generic", "passed": true, "evidence": "Defines Order : Aggregate<OrderState>"},
+          {"text": "defines-three-events", "passed": true, "evidence": "OrderPlaced, OrderConfirmed, OrderCancelled with [EventType]"},
+          {"text": "uses-when-fold", "passed": true, "evidence": "Uses When() override with switch expression"},
+          {"text": "has-business-guards", "passed": true, "evidence": "Guards against confirming cancelled orders"}
+        ]
+      }
+    },
+    {
+      "eval_name": "functional-command-service",
+      "prompt": "Set up a functional command service with BookRoom and CancelBooking commands.",
+      "with_skill": {
+        "pass_rate": 1.0,
+        "passed": 5,
+        "total": 5,
+        "time_seconds": 50.3,
+        "tokens": 18104,
+        "expectations": [
+          {"text": "uses-functional-service", "passed": true, "evidence": "BookingService : CommandService<BookingState>"},
+          {"text": "uses-fluent-builder", "passed": true, "evidence": "On<BookRoom>().InState(...).GetStream(...).Act(...)"},
+          {"text": "act-returns-events", "passed": true, "evidence": "Act returns array literals [new RoomBooked(...)]"},
+          {"text": "state-inherits-state-t", "passed": true, "evidence": "BookingState : State<BookingState>"},
+          {"text": "handles-both-commands", "passed": true, "evidence": "Both BookRoom and CancelBooking registered"}
+        ]
+      },
+      "without_skill": {
+        "pass_rate": 1.0,
+        "passed": 5,
+        "total": 5,
+        "time_seconds": 48.4,
+        "tokens": 12832,
+        "expectations": [
+          {"text": "uses-functional-service", "passed": true, "evidence": "BookingService : CommandService<BookingState>"},
+          {"text": "uses-fluent-builder", "passed": true, "evidence": "On<BookRoom>().InState(...).GetStream(...).Act(...)"},
+          {"text": "act-returns-events", "passed": true, "evidence": "Act returns new[] { new RoomBooked(...) }"},
+          {"text": "state-inherits-state-t", "passed": true, "evidence": "BookingState : State<BookingState>"},
+          {"text": "handles-both-commands", "passed": true, "evidence": "Both BookRoom and CancelBooking registered"}
+        ]
+      }
+    },
+    {
+      "eval_name": "di-setup",
+      "prompt": "Register event types and set up DI for ASP.NET Core with event store and subscriptions.",
+      "with_skill": {
+        "pass_rate": 1.0,
+        "passed": 5,
+        "total": 5,
+        "time_seconds": 51.7,
+        "tokens": 22188,
+        "expectations": [
+          {"text": "registers-type-map", "passed": true, "evidence": "TypeMap.RegisterKnownEventTypes(assembly)"},
+          {"text": "registers-event-store", "passed": true, "evidence": "AddEventStore<KurrentDBEventStore>()"},
+          {"text": "registers-subscription", "passed": true, "evidence": "AddSubscription<AllStreamSubscription, AllStreamSubscriptionOptions>"},
+          {"text": "registers-event-handler", "passed": true, "evidence": "AddEventHandler<YourHandler>()"},
+          {"text": "uses-aspnet-builder", "passed": true, "evidence": "var builder = WebApplication.CreateBuilder(args)"}
+        ]
+      },
+      "without_skill": {
+        "pass_rate": 0.8,
+        "passed": 4,
+        "total": 5,
+        "time_seconds": 52.0,
+        "tokens": 13156,
+        "expectations": [
+          {"text": "registers-type-map", "passed": true, "evidence": "TypeMap.RegisterKnownEventTypes(assembly)"},
+          {"text": "registers-event-store", "passed": false, "evidence": "Used fabricated AddEventuous(eb => eb.UseEventStore()) API that does not exist"},
+          {"text": "registers-subscription", "passed": true, "evidence": "AddSubscription<AllStreamSubscription>"},
+          {"text": "registers-event-handler", "passed": true, "evidence": "AddEventHandler<BookingHandler>()"},
+          {"text": "uses-aspnet-builder", "passed": true, "evidence": "var builder = WebApplication.CreateBuilder(args)"}
+        ]
+      }
+    }
+  ],
+  "run_summary": {
+    "with_skill": {
+      "mean_pass_rate": "100%",
+      "mean_time_seconds": 52.8,
+      "mean_tokens": 19561
+    },
+    "without_skill": {
+      "mean_pass_rate": "93%",
+      "mean_time_seconds": 50.1,
+      "mean_tokens": 13083
+    },
+    "delta": {
+      "pass_rate": "+7%",
+      "time_seconds": "+2.7",
+      "tokens": "+6478"
+    }
+  },
+  "notes": [
+    "The skill's primary value shows in DI setup (eval 2) where the baseline hallucinated a non-existent API",
+    "For domain modeling (eval 0) and functional services (eval 1), Sonnet already knows Eventuous well enough to pass all assertions",
+    "The with-skill runs use ~50% more tokens due to reading the skill content, but produce more accurate DI registration patterns",
+    "Evals 0 and 1 are non-discriminating - both configurations pass all assertions. Consider harder assertions or edge cases."
+  ]
+}

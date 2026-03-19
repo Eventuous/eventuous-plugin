@@ -1,0 +1,31 @@
+{
+  "eval_id": 0,
+  "run_type": "with_skill",
+  "expectations": [
+    {
+      "text": "uses-state-record",
+      "passed": true,
+      "evidence": "Code defines: `public record OrderState : State<OrderState>`"
+    },
+    {
+      "text": "uses-aggregate-generic",
+      "passed": true,
+      "evidence": "Code defines: `public class Order : Aggregate<OrderState>`"
+    },
+    {
+      "text": "defines-three-events",
+      "passed": true,
+      "evidence": "Three events defined: OrderPlaced, OrderConfirmed, OrderCancelled — all decorated with [EventType]"
+    },
+    {
+      "text": "uses-when-fold",
+      "passed": true,
+      "evidence": "OrderState constructor uses `On<OrderPlaced>(...)`, `On<OrderConfirmed>(...)`, `On<OrderCancelled>(...)` — the On<> fold pattern"
+    },
+    {
+      "text": "has-business-guards",
+      "passed": true,
+      "evidence": "Confirm() throws if Status == Confirmed or Cancelled; Cancel() throws if already Cancelled or reason is empty; Place() uses EnsureDoesntExist() and validates items/amount"
+    }
+  ]
+}

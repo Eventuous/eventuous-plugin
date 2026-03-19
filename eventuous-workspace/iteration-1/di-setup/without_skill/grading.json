@@ -1,0 +1,31 @@
+{
+  "eval_id": 2,
+  "run_type": "without_skill",
+  "expectations": [
+    {
+      "text": "registers-type-map",
+      "passed": true,
+      "evidence": "`TypeMap.RegisterKnownEventTypes(typeof(BookingInitiated).Assembly)` called at startup"
+    },
+    {
+      "text": "registers-event-store",
+      "passed": false,
+      "evidence": "The code uses `builder.Services.AddEventuous(eb => eb.UseEventStore()...)` which is a non-standard/fabricated API not matching Eventuous's actual `AddEventStore<T>()` or `AddAggregateStore<T>()`. No correct `AddEventStore<EsdbEventStore>()` call is present."
+    },
+    {
+      "text": "registers-subscription",
+      "passed": true,
+      "evidence": "`builder.Services.AddSubscription<AllStreamSubscription, AllStreamSubscriptionOptions>(\"BookingsSubscription\", ...)` registers a subscription"
+    },
+    {
+      "text": "registers-event-handler",
+      "passed": true,
+      "evidence": "`.AddEventHandler<BookingProjection>()` inside the subscription builder; `BookingProjection` implementing `IEventHandler` is shown"
+    },
+    {
+      "text": "uses-aspnet-builder",
+      "passed": true,
+      "evidence": "Code is in `Program.cs` context using `var builder = WebApplication.CreateBuilder(args)` and `var app = builder.Build()`"
+    }
+  ]
+}

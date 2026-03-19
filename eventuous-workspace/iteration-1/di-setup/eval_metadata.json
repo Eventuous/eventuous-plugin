@@ -1,0 +1,6 @@
+{
+  "eval_id": 2,
+  "eval_name": "di-setup",
+  "prompt": "I'm using Eventuous and need to register my event types and set up DI for an ASP.NET Core app with an event store and subscriptions. What's the minimal setup?",
+  "assertions": []
+}

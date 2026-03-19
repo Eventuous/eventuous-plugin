@@ -226,26 +226,9 @@ if (result.Success) {
 
 ## Event Serialization & Type Mapping
 
-Events must be registered in `TypeMap` for serialization. The `[EventType]` attribute provides automatic registration.
+Events decorated with `[EventType]` are automatically registered in `TypeMap` via source generation. No manual `TypeMap.RegisterKnownEventTypes()` call is needed — the source generator handles it at compile time.
 
-```csharp
-// Option 1: Auto-discover all [EventType]-decorated types in loaded assemblies
-TypeMap.RegisterKnownEventTypes();
-
-// Option 2: Auto-discover from specific assemblies
-TypeMap.RegisterKnownEventTypes(typeof(BookingEvents).Assembly);
-
-// Option 3: Manual registration
-TypeMap.Instance.AddType<V1.RoomBooked>("V1.RoomBooked");
-```
-
-Default serializer uses `System.Text.Json`. Configure custom options:
-
-```csharp
-DefaultEventSerializer.SetDefaultSerializer(
-    new DefaultEventSerializer(new JsonSerializerOptions(JsonSerializerDefaults.Web))
-);
-```
+The default serializer uses `System.Text.Json` and is configured automatically. You do not need to call `DefaultEventSerializer.SetDefaultSerializer()` unless you need non-default JSON options.
 
 ---
 
@@ -368,28 +351,53 @@ await producer.Produce(
 
 ## DI Registration Pattern
 
-Standard setup in `Program.cs` or extension methods:
+Standard setup in `Program.cs` using KurrentDB as the default event store:
 
 ```csharp
-// 1. Configure serialization
-DefaultEventSerializer.SetDefaultSerializer(
-    new DefaultEventSerializer(new JsonSerializerOptions(JsonSerializerDefaults.Web))
+var builder = WebApplication.CreateBuilder(args);
+
+// 1. Register KurrentDB client (connection string from config)
+builder.Services.AddKurrentDBClient(
+    builder.Configuration["KurrentDB:ConnectionString"]!
 );
 
-// 2. Register event store (infrastructure-specific, see infra skill files)
-services.AddEventStore<YourEventStoreImpl>();
+// 2. Register event store
+builder.Services.AddEventStore<KurrentDBEventStore>();
 
 // 3. Register command services
-services.AddCommandService<BookingsCommandService, BookingState>();
+builder.Services.AddCommandService<BookingsCommandService, BookingState>();
 // Or for functional:
-services.AddCommandService<PaymentsService, PaymentState>();
+builder.Services.AddCommandService<PaymentsService, PaymentState>();
 
 // 4. Register subscriptions (infrastructure-specific)
-services.AddSubscription<SubType, SubOptions>("name", builder => ...);
+builder.Services.AddSubscription<SubType, SubOptions>("name", builder => ...);
 
 // 5. Register producers (infrastructure-specific)
-services.AddProducer<ProducerType>();
+builder.Services.AddProducer<ProducerType>();
+
+var app = builder.Build();
+
+// Map HTTP commands
+app.MapDiscoveredCommands<BookingState>();
+
+app.Run();
 ```
+
+Configuration in `appsettings.json`:
+
+```json
+{
+  "KurrentDB": {
+    "ConnectionString": "kurrentdb://localhost:2113?tls=false"
+  }
+}
+```
+
+**Important:**
+- Event types are registered automatically via source generation (no manual `TypeMap` calls needed)
+- The default serializer is configured automatically (no `DefaultEventSerializer.SetDefaultSerializer()` needed)
+- `IAggregateStore` is deprecated — use `IEventReader`/`IEventWriter` extension methods instead
+- Use `AddKurrentDBClient` (not `AddEventStoreClient`) and the `kurrentdb://` connection scheme
 
 ---
 
