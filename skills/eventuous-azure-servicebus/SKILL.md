@@ -135,12 +135,12 @@ services.AddSubscription<ServiceBusSubscription, ServiceBusSubscriptionOptions>(
 public class ServiceBusMessageAttributeNames {
     public string MessageType   { get; set; } = "MessageType";
     public string StreamName    { get; set; } = "StreamName";
-    public string CorrelationId { get; set; } = "correlation-id";
-    public string CausationId   { get; set; } = "causation-id";
+    public string CorrelationId { get; set; } = "eventuous.correlation-id";
+    public string CausationId   { get; set; } = "eventuous.causation-id";
     public string ReplyTo       { get; set; } = "ReplyTo";
     public string Subject       { get; set; } = "Subject";
     public string To            { get; set; } = "To";
-    public string MessageId     { get; set; } = "message-id";
+    public string MessageId     { get; set; } = "eventuous.message-id";
 }
 ```
 
