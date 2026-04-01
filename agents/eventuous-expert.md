@@ -86,16 +86,16 @@ Determine the target language from the project context:
 Your reference material is in the plugin's skill files. Read them when you need detailed API guidance:
 
 *.NET Skills:*
-- `${CLAUDE_PLUGIN_ROOT}/skills/eventuous/SKILL.md` — core library (domain, application, subscriptions, producers)
-- `${CLAUDE_PLUGIN_ROOT}/skills/eventuous-kurrentdb/SKILL.md` — KurrentDB/EventStoreDB
-- `${CLAUDE_PLUGIN_ROOT}/skills/eventuous-postgres/SKILL.md` — PostgreSQL
-- `${CLAUDE_PLUGIN_ROOT}/skills/eventuous-mongodb/SKILL.md` — MongoDB
-- `${CLAUDE_PLUGIN_ROOT}/skills/eventuous-rabbitmq/SKILL.md` — RabbitMQ
-- `${CLAUDE_PLUGIN_ROOT}/skills/eventuous-kafka/SKILL.md` — Kafka
-- `${CLAUDE_PLUGIN_ROOT}/skills/eventuous-sqlserver/SKILL.md` — SQL Server
-- `${CLAUDE_PLUGIN_ROOT}/skills/eventuous-google-pubsub/SKILL.md` — Google Pub/Sub
-- `${CLAUDE_PLUGIN_ROOT}/skills/eventuous-azure-servicebus/SKILL.md` — Azure Service Bus
-- `${CLAUDE_PLUGIN_ROOT}/skills/eventuous-gateway/SKILL.md` — Event Gateway
+- `${CLAUDE_PLUGIN_ROOT}/skills/eventuous-dotnet/SKILL.md` — core library (domain, application, subscriptions, producers)
+- `${CLAUDE_PLUGIN_ROOT}/skills/eventuous-dotnet-kurrentdb/SKILL.md` — KurrentDB/EventStoreDB
+- `${CLAUDE_PLUGIN_ROOT}/skills/eventuous-dotnet-postgres/SKILL.md` — PostgreSQL
+- `${CLAUDE_PLUGIN_ROOT}/skills/eventuous-dotnet-mongodb/SKILL.md` — MongoDB
+- `${CLAUDE_PLUGIN_ROOT}/skills/eventuous-dotnet-rabbitmq/SKILL.md` — RabbitMQ
+- `${CLAUDE_PLUGIN_ROOT}/skills/eventuous-dotnet-kafka/SKILL.md` — Kafka
+- `${CLAUDE_PLUGIN_ROOT}/skills/eventuous-dotnet-sqlserver/SKILL.md` — SQL Server
+- `${CLAUDE_PLUGIN_ROOT}/skills/eventuous-dotnet-google-pubsub/SKILL.md` — Google Pub/Sub
+- `${CLAUDE_PLUGIN_ROOT}/skills/eventuous-dotnet-azure-servicebus/SKILL.md` — Azure Service Bus
+- `${CLAUDE_PLUGIN_ROOT}/skills/eventuous-dotnet-gateway/SKILL.md` — Event Gateway
 
 *Go Skills:*
 - `${CLAUDE_PLUGIN_ROOT}/skills/eventuous-go/SKILL.md` — core library (domain, state/fold, aggregates, commands, subscriptions, codec)

@@ -1,5 +1,5 @@
 ---
-name: eventuous-sqlserver
+name: eventuous-dotnet-sqlserver
 description: "This skill should be used when configuring SQL Server (MSSQL) integration with Eventuous. Covers SqlServerStore event store, SqlServerAllStreamSubscription and SqlServerStreamSubscription, SqlServerCheckpointStore, and SqlServerProjector for read model projections. Common triggers: 'SQL Server event store', 'MSSQL with Eventuous', 'SqlServerStore', 'AddEventuousSqlServer', 'SQL Server projections'."
 ---
 # Eventuous SQL Server Integration

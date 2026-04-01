@@ -1,5 +1,5 @@
 ---
-name: eventuous-mongodb
+name: eventuous-dotnet-mongodb
 description: "This skill should be used when configuring MongoDB integration with Eventuous. Covers MongoCheckpointStore and MongoProjector for read model projections with typed projected documents. Common triggers: 'MongoDB projections', 'MongoProjector', 'MongoCheckpointStore', 'project events to MongoDB', 'MongoDB read model'."
 ---
 # Eventuous MongoDB Projections
