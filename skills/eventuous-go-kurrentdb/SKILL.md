@@ -195,7 +195,7 @@ kurrentdb.NewCatchUp(client, jsonCodec, "FilteredSub",
 
 ```go
 sub := kurrentdb.NewPersistent(client, jsonCodec, "PaymentIntegration",
-    kurrentdb.PersistentFromStream(eventuous.NewStreamName("Payment", "")),
+    kurrentdb.PersistentFromAll(),
     kurrentdb.PersistentWithHandler(subscription.HandlerFunc(
         func(ctx context.Context, msg *subscription.ConsumeContext) error {
             // process event
