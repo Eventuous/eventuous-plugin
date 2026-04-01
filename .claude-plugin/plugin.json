@@ -1,6 +1,6 @@
 {
   "name": "eventuous",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Skills and agents for building event-sourced applications with Eventuous (.NET and Go)",
   "author": {
     "name": "Eventuous",
