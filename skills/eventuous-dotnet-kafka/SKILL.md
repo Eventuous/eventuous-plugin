@@ -76,10 +76,14 @@ public static class KafkaHeaderKeys {
 To forward events from an event store subscription to Kafka topics, use the Eventuous Gateway. The stream name becomes the Kafka topic name. See the `eventuous-dotnet-gateway` skill for full gateway configuration details.
 
 ```csharp
-builder.Services.AddGateway<KurrentDBAllStreamSubscription, KafkaProduceOptions>(
+services.AddGateway<
+    AllStreamSubscription,
+    AllStreamSubscriptionOptions,
+    KafkaBasicProducer,
+    KafkaProduceOptions
+>(
     "events-to-kafka",
-    GatewaySubscription<KurrentDBAllStreamSubscription>.Create("kafka-gateway-sub"),
-    RouteAndTransform.Empty
+    KafkaGateway.Transform
 );
 ```
 

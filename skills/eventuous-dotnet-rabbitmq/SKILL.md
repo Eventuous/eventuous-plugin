@@ -168,10 +168,14 @@ To forward events from an event store subscription to RabbitMQ, use the Eventuou
 Brief example:
 
 ```csharp
-builder.Services.AddGateway<RabbitMqSubscription, RabbitMqProduceOptions>(
+services.AddGateway<
+    AllStreamSubscription,
+    AllStreamSubscriptionOptions,
+    RabbitMqProducer,
+    RabbitMqProduceOptions
+>(
     "payment-gateway",
-    GatewaySubscription<RabbitMqSubscription>.Create(...),
-    routeAndTransform
+    PaymentsGateway.Transform
 );
 ```
 

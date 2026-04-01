@@ -53,7 +53,7 @@ codec.Register[PaymentRecorded](types, "PaymentRecorded")
 codec.Register[BookingCancelled](types, "BookingCancelled")
 ```
 
-`TypeMap` is thread-safe. `Register` panics on name/type conflicts.
+`TypeMap` is thread-safe. `Register` returns an error on name/type conflicts.
 
 TypeMap API:
 - `codec.NewTypeMap() *TypeMap` — create new registry
