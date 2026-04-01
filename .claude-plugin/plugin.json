@@ -1,7 +1,7 @@
 {
   "name": "eventuous",
   "version": "1.0.0",
-  "description": "Skills and agents for building event-sourced .NET applications with Eventuous",
+  "description": "Skills and agents for building event-sourced applications with Eventuous (.NET and Go)",
   "author": {
     "name": "Eventuous",
     "url": "https://eventuous.dev"
@@ -19,7 +19,10 @@
     "./skills/eventuous-sqlserver",
     "./skills/eventuous-google-pubsub",
     "./skills/eventuous-azure-servicebus",
-    "./skills/eventuous-gateway"
+    "./skills/eventuous-gateway",
+    "./skills/eventuous-go",
+    "./skills/eventuous-go-kurrentdb",
+    "./skills/eventuous-go-otel"
   ],
   "agents": [
     "./agents/eventuous-expert.md"
