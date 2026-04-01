@@ -1,5 +1,5 @@
 ---
-name: eventuous-rabbitmq
+name: eventuous-dotnet-rabbitmq
 description: "This skill should be used when configuring RabbitMQ integration with Eventuous. Covers RabbitMqProducer, RabbitMqSubscription, exchange and queue configuration, connection factory setup, and produce options. Common triggers: 'publish events to RabbitMQ', 'consume from RabbitMQ', 'RabbitMQ producer', 'RabbitMQ subscription', 'RabbitMQ exchange configuration'."
 ---
 # Eventuous RabbitMQ Integration
@@ -163,15 +163,19 @@ No checkpoint store is needed for RabbitMQ subscriptions since RabbitMQ manages 
 
 ## Gateway Integration
 
-To forward events from an event store subscription to RabbitMQ, use the Eventuous Gateway. The stream name used in `Produce` becomes the RabbitMQ exchange name. See the `eventuous-gateway` skill for full gateway configuration details.
+To forward events from an event store subscription to RabbitMQ, use the Eventuous Gateway. The stream name used in `Produce` becomes the RabbitMQ exchange name. See the `eventuous-dotnet-gateway` skill for full gateway configuration details.
 
 Brief example:
 
 ```csharp
-builder.Services.AddGateway<RabbitMqSubscription, RabbitMqProduceOptions>(
+services.AddGateway<
+    AllStreamSubscription,
+    AllStreamSubscriptionOptions,
+    RabbitMqProducer,
+    RabbitMqProduceOptions
+>(
     "payment-gateway",
-    GatewaySubscription<RabbitMqSubscription>.Create(...),
-    routeAndTransform
+    PaymentsGateway.Transform
 );
 ```
 

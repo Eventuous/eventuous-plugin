@@ -1,5 +1,5 @@
 ---
-name: eventuous-google-pubsub
+name: eventuous-dotnet-google-pubsub
 description: "This skill should be used when configuring Google Cloud Pub/Sub integration with Eventuous. Covers GooglePubSubProducer for publishing to Pub/Sub topics, GooglePubSubSubscription for consuming messages, emulator configuration, message attributes, and ordering keys. Common triggers: 'publish to Pub/Sub', 'Google Pub/Sub subscription', 'Pub/Sub emulator', 'GooglePubSubProducer', 'Pub/Sub with Eventuous'."
 ---
 # Eventuous Google Pub/Sub Integration

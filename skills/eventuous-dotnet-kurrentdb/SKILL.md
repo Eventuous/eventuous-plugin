@@ -1,5 +1,5 @@
 ---
-name: eventuous-kurrentdb
+name: eventuous-dotnet-kurrentdb
 description: "This skill should be used when configuring KurrentDB or EventStoreDB (ESDB) integration with Eventuous. Covers KurrentDBEventStore, AllStreamSubscription, StreamSubscription, StreamPersistentSubscription, AllPersistentSubscription, KurrentDBProducer, and checkpoint stores. Common triggers: 'set up EventStoreDB', 'KurrentDB subscription', 'persistent subscription', 'ESDB event store', 'EsdbEventStore migration'."
 ---
 # Eventuous KurrentDB (EventStoreDB) Integration

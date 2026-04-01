@@ -1,5 +1,5 @@
 ---
-name: eventuous
+name: eventuous-dotnet
 description: "This skill should be used when building event-sourced .NET applications with Eventuous, or when asking about Eventuous aggregates, state, domain events, command services (aggregate-based or functional), event stores, subscriptions, producers, projections, type mapping, serialization, stream naming, or diagnostics. Common triggers: 'create an aggregate', 'define domain events', 'set up a command service', 'register event handlers', 'configure Eventuous', 'event sourcing with .NET'. Recommends KurrentDB as the default event store unless the user specifies otherwise."
 ---
 # Eventuous - Event Sourcing for .NET
@@ -427,12 +427,12 @@ app.MapEventuousSpyglass();
 
 When working with specific infrastructure, also include the relevant skill for full registration and configuration details:
 
-- `eventuous-kurrentdb` - KurrentDB (EventStoreDB) event store, subscriptions, producer
-- `eventuous-postgres` - PostgreSQL event store, subscriptions, projections
-- `eventuous-sqlserver` - SQL Server event store, subscriptions
-- `eventuous-mongodb` - MongoDB projections and checkpoint store
-- `eventuous-rabbitmq` - RabbitMQ producer and subscription
-- `eventuous-kafka` - Kafka producer and subscription
-- `eventuous-google-pubsub` - Google Pub/Sub producer and subscription
-- `eventuous-azure-servicebus` - Azure Service Bus producer and subscription
-- `eventuous-gateway` - Event gateway for cross-context routing
+- `eventuous-dotnet-kurrentdb` - KurrentDB (EventStoreDB) event store, subscriptions, producer
+- `eventuous-dotnet-postgres` - PostgreSQL event store, subscriptions, projections
+- `eventuous-dotnet-sqlserver` - SQL Server event store, subscriptions
+- `eventuous-dotnet-mongodb` - MongoDB projections and checkpoint store
+- `eventuous-dotnet-rabbitmq` - RabbitMQ producer and subscription
+- `eventuous-dotnet-kafka` - Kafka producer and subscription
+- `eventuous-dotnet-google-pubsub` - Google Pub/Sub producer and subscription
+- `eventuous-dotnet-azure-servicebus` - Azure Service Bus producer and subscription
+- `eventuous-dotnet-gateway` - Event gateway for cross-context routing

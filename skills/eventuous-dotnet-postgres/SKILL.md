@@ -1,5 +1,5 @@
 ---
-name: eventuous-postgres
+name: eventuous-dotnet-postgres
 description: "This skill should be used when configuring PostgreSQL integration with Eventuous. Covers PostgresStore event store, PostgresAllStreamSubscription and PostgresStreamSubscription, PostgresCheckpointStore, and PostgresProjector for read model projections. Common triggers: 'set up Postgres with Eventuous', 'PostgreSQL event store', 'Postgres subscription', 'AddEventuousPostgres', 'Postgres projections'."
 ---
 # Eventuous PostgreSQL Integration

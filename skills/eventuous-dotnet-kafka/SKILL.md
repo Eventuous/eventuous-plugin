@@ -1,5 +1,5 @@
 ---
-name: eventuous-kafka
+name: eventuous-dotnet-kafka
 description: "This skill should be used when configuring Kafka integration with Eventuous. Covers KafkaBasicProducer for publishing to Kafka topics, Confluent.Kafka configuration, partition keys, message headers, and produce options. Common triggers: 'publish events to Kafka', 'Kafka producer', 'Kafka topic', 'KafkaBasicProducer', 'Confluent.Kafka with Eventuous'."
 ---
 # Eventuous Kafka Integration
@@ -73,13 +73,17 @@ public static class KafkaHeaderKeys {
 
 ## Gateway Integration
 
-To forward events from an event store subscription to Kafka topics, use the Eventuous Gateway. The stream name becomes the Kafka topic name. See the `eventuous-gateway` skill for full gateway configuration details.
+To forward events from an event store subscription to Kafka topics, use the Eventuous Gateway. The stream name becomes the Kafka topic name. See the `eventuous-dotnet-gateway` skill for full gateway configuration details.
 
 ```csharp
-builder.Services.AddGateway<KurrentDBAllStreamSubscription, KafkaProduceOptions>(
+services.AddGateway<
+    AllStreamSubscription,
+    AllStreamSubscriptionOptions,
+    KafkaBasicProducer,
+    KafkaProduceOptions
+>(
     "events-to-kafka",
-    GatewaySubscription<KurrentDBAllStreamSubscription>.Create("kafka-gateway-sub"),
-    RouteAndTransform.Empty
+    KafkaGateway.Transform
 );
 ```
 
