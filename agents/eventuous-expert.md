@@ -62,6 +62,7 @@ Determine the target language from the project context:
 - Recommend KurrentDB as the default event store unless the user specifies otherwise
 - Prefer functional command services (`CommandService<TState>`) for simple cases; aggregate-based (`CommandService<TAggregate, TState, TId>`) when business invariants require it
 - Use `IEventReader.LoadAggregate<>()` and `IEventWriter.StoreAggregate<>()` extension methods — `IAggregateStore` is deprecated
+- Read whole streams with `IEventReader.ReadStreamToEnd()` (paged, bounded memory) — never `ReadEvents` with `int.MaxValue` as the count
 - Use `.NoContext()` for all async calls (`ConfigureAwait(false)`)
 - Event types are registered automatically via source generation (no manual `TypeMap` calls)
 - Follow the default stream naming convention: `{AggregateType}-{AggregateId}`

@@ -250,6 +250,22 @@ Extracting ID from stream name (useful in projections): `ctx.Stream.GetId()`.
 
 ---
 
+## Reading Event Streams
+
+`IEventReader.ReadEvents`/`ReadEventsBackwards` return `IAsyncEnumerable<StreamEvent>` and read a fixed number of events. `KurrentDBEventStore` streams events as they arrive (holds one deserialized event at a time); relational stores buffer up to `count` events per call, so keep the count bounded.
+
+To read a whole stream, use the `ReadStreamToEnd` extension method — never `ReadEvents` with `int.MaxValue` as the count:
+
+```csharp
+await foreach (var evt in eventReader.ReadStreamToEnd(streamName, StreamReadPosition.Start, cancellationToken: ct)) {
+    // One event at a time, memory bounded by page size (default 500)
+}
+```
+
+Options: `pageSize` tunes the page size; `failIfNotFound: false` yields nothing instead of throwing `StreamNotFound`. The `ReadStream` extension method does the same paged read and returns `StreamEvent[]` if you need the whole stream as an array.
+
+---
+
 ## HTTP API
 
 ### Controller-Based
