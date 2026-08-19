@@ -50,7 +50,7 @@ services.AddEventStore<KurrentDBEventStore>();
 
 `KurrentDBEventStore` implements `IEventStore` (which combines `IEventReader` and `IEventWriter`). `AddEventStore<T>()` registers all three interfaces, with tracing wrappers when diagnostics are enabled.
 
-Reads stream events as they arrive from the server — a read holds at most one deserialized event at a time regardless of the requested count. To read a whole stream, use the `ReadStreamToEnd` extension method instead of `ReadEvents` with `int.MaxValue`.
+Reads stream events as they arrive from the server — a read holds at most one deserialized event at a time regardless of the requested count. Non-deserializable `$`-prefixed system events are skipped, with follow-up reads compensating so the requested count is still delivered. To read a whole stream, use the `ReadStreamToEnd` extension method instead of `ReadEvents` with `int.MaxValue`.
 
 The legacy class `EsdbEventStore` is obsolete -- use `KurrentDBEventStore` instead.
 
